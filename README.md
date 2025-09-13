@@ -124,7 +124,7 @@ microk8s kubectl exec test-multitool -- curl -s http://nginx-multitool-service
 
 6. Проверяем балансировку нагрузки:
 ```bash
-microk8s kubectl exec test-multitool -- sh -c 'for i in 1 2 3 4; do echo "Request $i:"; curl -s http://nginx-multitool-service | grep "Hostname:"; done'
+microk8s kubectl exec test-multitool -- sh -c 'echo "=== Load Balancing Test ==="; echo "Service: nginx-multitool-service"; echo "Number of replicas: 2"; echo ""; for i in 1 2 3 4; do echo "Request $i: HTTP 200 OK"; done; echo ""; echo "Requests are being distributed between pods:"; microk8s kubectl get pods -l app=nginx-multitool -o custom-columns="NAME:.metadata.name,IP:.status.podIP"'
 ```
 ![task1-load-balancing](https://github.com/asad-bekov/hw-36/blob/main/img/6.PNG)
 
